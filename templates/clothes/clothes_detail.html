@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        /* Heading styles */
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #666;
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        /* List styles */
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Colors */
+        .colors {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .colors li {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Nested lists styles */
+        ul ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .colors li {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ clad.product_name }}</h1>
+    <p>Other Data: {{ clad.other_data }}</p>
+    <p>Product Category: {{ clad.product_category_name }}</p>
+    <p>Category: {{ clad.category_name }}</p>
+
+    <h2>Apparel Sizes</h2>
+    <ul>
+        {% for size in clad.apparelsize_set.all %}
+        <li>{{ size.size_code }} - Sort Order: {{ size.sort_order }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Colors</h2>
+    <ul class="colors">
+        {% for color in clad.colors.all %}
+        <li style="background-color: {{ color.color_code }};"></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Product Categories</h2>
+    <ul>
+        {% for product_category in clad.productcategories_set.all %}
+        <li>{{ product_category.product_category_name }}</li>
+        <ul>
+            {% for category in product_category.categories_set.all %}
+            <li>{{ category.category_name }}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+</body>
+</html>
